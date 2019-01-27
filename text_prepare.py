@@ -8,7 +8,7 @@ def text_prepare(text):
         return text
 
     if text[0] in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-
+        # need to be donne
         return text
 
         text = re.sub(',', '.', text)

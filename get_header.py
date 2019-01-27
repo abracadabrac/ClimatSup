@@ -4,7 +4,11 @@ import os
 import pandas as pd
 
 
-def get_header(df):
+def get_header(csv_dir):
+    name = os.listdir(csv_dir)[0]
+    file = csv_dir + name
+    df = pd.read_csv(file)
+
     column_0 = list(df.columns)
     column_1 = list(df.loc[0])
 
@@ -20,11 +24,7 @@ def get_header(df):
     return header
 
 if __name__ == '__main__':
-    csv_path = './data/csv/'
-    name = os.listdir(csv_path)[0]
-    file = csv_path + name
-    df = pd.read_csv(file)
-
-    header = get_header(df)
+    csv_dir = "./data/csv"
+    header = get_header(csv_dir)
 
     print(header)

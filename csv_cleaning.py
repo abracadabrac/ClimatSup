@@ -7,8 +7,8 @@ from xlsxwriter.workbook import Workbook
 import numpy as np
 
 
-def clean_csv(csv_path='./data/full.csv'):
-    df = pd.read_csv(csv_path, sep=';')
+def clean_csv(merged_csv_path, cleaned_csv_path, cleaned_xlsx_path):
+    df = pd.read_csv(merged_csv_path, sep=';')
 
     # dictionary of corresponding between names and types
     dict_Nom_Type = dict(df.groupby('ETABLISSEMENT_Nom').ETABLISSEMENT_Type.unique())  # corresponding between name and type
@@ -50,20 +50,22 @@ def clean_csv(csv_path='./data/full.csv'):
                         'UNITE_DE_VALEUR_COURS_Mode_devaluation',
                         'UNITE_DE_VALEUR_COURS_Avis_critique_sur_le_cours_et_ou_la_formation',
                         'UNITE_DE_VALEUR_COURS_Formation_initiale_ou_continue']
-    # list des questions ou 'non' n'est pas une reponse recevable et est remplacée par np.nan
+    # list des questions ou 'non' n'est pas une reponse recevable et est remplace par np.nan
 
     for column in list_WH_question:
         df.loc[df[column] == 'non', column] = np.nan
 
     list_column_drop = list(df.columns[df.count() / df.shape[0] < 0.33])
+    print('columns deletes: ', list_column_drop, '\n')
     for column in list_column_drop:
         df = df.drop(column, axis=1)
 
-    writer = pd.ExcelWriter('./data/full_clean.xlsx')
+    df.to_csv(cleaned_csv_path, index=False, sep=';')
+
+    writer = pd.ExcelWriter(cleaned_xlsx_path)
     df.to_excel(writer, 'Recensement', index=False)
     writer.save()
 
-    df.to_csv('./data/full_clean.csv', index=False, sep=';')
 
 if __name__ == '__main__':
-    clean_csv(csv_path='./data/full.csv')
+    clean_csv(merged_csv_path='./data/full.csv', cleaned_csv_path='./data/cleaned.csv', cleaned_xlsx_path='./data/cleaned.xls')

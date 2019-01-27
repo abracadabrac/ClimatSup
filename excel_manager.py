@@ -31,8 +31,8 @@ def csv_from_excel(xl_file, csv_dir):
                     wr.writerow(row)
 
 
-def make_csv(excel_dir='./data/excel/'):
-    csv_dir = './data/csv/'
+def make_csv(excel_dir, csv_dir):
+
     list_file = os.listdir(excel_dir)
     for file in list_file:
         print(file)
