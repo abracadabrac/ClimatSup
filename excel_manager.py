@@ -1,6 +1,7 @@
 import xlrd
 import csv
 import os
+from text_prepare import text_prepare
 
 
 def csv_from_excel(xl_file, csv_dir):
@@ -12,7 +13,7 @@ def csv_from_excel(xl_file, csv_dir):
     """
     # recuperation du nom de l'ecole pour donner comme nom au fichier csv
     base = os.path.basename(xl_file)
-    name = os.path.splitext(base)[0].encode("utf8")
+    name = text_prepare(os.path.splitext(base)[0])
 
     # ouverture du fichier excel et lecture du bonne onglet
     wb = xlrd.open_workbook(xl_file)
@@ -34,6 +35,7 @@ def csv_from_excel(xl_file, csv_dir):
 def make_csv(excel_dir, csv_dir):
 
     list_file = os.listdir(excel_dir)
+    list_file.remove('.DS_Store')
     for file in list_file:
         print(file)
         csv_from_excel(excel_dir + file, csv_dir)

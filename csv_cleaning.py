@@ -14,7 +14,10 @@ def clean_csv(merged_csv_path, cleaned_csv_path, cleaned_xlsx_path):
     dict_Nom_Type = dict(df.groupby('ETABLISSEMENT_Nom').ETABLISSEMENT_Type.unique())  # corresponding between name and type
     new_dict_Nom_Type = {}  # delete non values in the dictionary
     for Nom, List_Type in dict_Nom_Type.items():
-        new_dict_Nom_Type[Nom] = [Type for Type in List_Type if type(Type) is str][0]
+        try:
+            new_dict_Nom_Type[Nom] = [Type for Type in List_Type if type(Type) is str][0]
+        except:
+            print('error with: ', Nom)
 
     dict_Nom_Type = new_dict_Nom_Type
 
@@ -68,4 +71,4 @@ def clean_csv(merged_csv_path, cleaned_csv_path, cleaned_xlsx_path):
 
 
 if __name__ == '__main__':
-    clean_csv(merged_csv_path='./data/full.csv', cleaned_csv_path='./data/cleaned.csv', cleaned_xlsx_path='./data/cleaned.xls')
+    clean_csv(merged_csv_path='./data/merged.csv', cleaned_csv_path='./data/cleaned.csv', cleaned_xlsx_path='./data/cleaned.xls')

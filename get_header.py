@@ -23,6 +23,7 @@ def get_header(csv_dir):
 
     return header
 
+
 if __name__ == '__main__':
     csv_dir = "./data/csv"
     header = get_header(csv_dir)
