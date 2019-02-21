@@ -56,6 +56,7 @@ def get_info(cleaned_csv_path):
     print("proportion de formation traitant d'environement par ecole de formation \n", dict_ecole_ratio_ENV, '\n')
     print("proportion de formation traitant de transition par ecole de formation \n", dict_ecole_ratio_TRANS, '\n')
 
+
 if __name__ == '__main__':
     cleaned_csv_path = './data/cleaned.csv'
     get_info(cleaned_csv_path)
